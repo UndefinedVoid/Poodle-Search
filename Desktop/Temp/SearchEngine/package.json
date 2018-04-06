@@ -1,0 +1,28 @@
+{
+  "name": "poodle",
+  "version": "1.0.0",
+  "description": "A WebSite Search Engine by Divy Srivastava",
+  "main": "NodeServer.js",
+  "dependencies": {
+    "formidable": "^1.2.1",
+    "fs": "^0.0.1-security",
+    "mongodb": "^3.0.5",
+    "node-cmd": "^3.0.0",
+    "node-static": "^0.7.10",
+    "nodemailer": "^4.6.3",
+    "nodemailer2": "^2.7.1",
+    "sendmail": "^1.4.1",
+    "socket.io": "^2.0.4",
+    "websocket": "^1.0.25"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node NodeServer.js"
+  },
+  "keywords": [
+    "SearchEngine",
+    "Search"
+  ],
+  "author": "Divy Srivastava",
+  "license": "MIT"
+}
