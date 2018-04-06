@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SearchEngine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="jquery-1.9.1.min.js"></script>
+    <script>
+    window.WebSocket = window.WebSocket || window.MozWebSocket;
+   // var connection = new WebSocket('ws://localhost:1234');
+    var connection = new window.WebSocket('ws://192.168.43.203:1234');
+
+    connection.onopen = function () {
+        // TODO 
+
+    };
+
+    connection.onerror = function (error) {
+        alert('Oops...Something Went Wrong...Try Again');
+
+    };
+   
+    
+    connection.onmessage = function (message) {
+        try {
+            var json = JSON.parse(message.data);
+        } catch (e) {
+            console.log('This doesn\'t look like a valid JSON: ', message.data);
+            return;
+        }
+        if (json.type === 'site') {
+           var showDiv = $('#showDiv');
+	var o = json.data;
+	var s = json.data2;
+            
+                showDiv.prepend('<a href="'+s+'">'+o+'</a><br>')
+           
+            
+	
+        }
+        if (json.type === 'add') {
+
+            alert('Oops..Result Not Found ... You Can Add One.');
+            document.getElementById('divShow').style.display=('inherit');
+        }
+           };
+/*
+searchReq.keydown(function(e) {
+        if (e.keyCode === 13) {
+            var request = searchReq.val() 
+            connection.send(JSON.stringify({type:'search', data:request}));
+	
+            searchReq.val('');
+            searchReq.attr('disabled', 'disabled');
+        }
+    });*/
+function Send() {
+    var searchReq = document.getElementById('req');
+    var request = searchReq.value;
+            connection.send(JSON.stringify({type:'search', data:request}));
+	
+            
+}    
+function AddWeb() {
+    var nameWeb = document.getElementById('nameWeb').value;
+    var addWeb = document.getElementById('addWeb').value;
+    connection.send(JSON.stringify({type:'addIt', data:nameWeb, data2:addWeb}))
+    alert('Added!');
+}
+    </script>
+</head>
+<body>
+<input type="search" id="req">  <button type="button" onclick="Send();">Search</button>
+<br>
+<br>
+<div id='divShow' style='display:none;'>
+    <input type="text" placeholder="example" id='nameWeb'>
+    <input type="text" placeholder="http://example.com" id='addWeb'>
+    <button onclick="AddWeb();">Add Website</button>
+</div>
+<div id='showDiv' height=30></div>
+</body>
+</html>
